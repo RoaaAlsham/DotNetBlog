@@ -1,0 +1,11 @@
+﻿namespace ZenBlog.API.Endpoints.Registrations
+{
+    public static class EndpointRegistration
+    {
+        public static void RegisterEndpoints(this IEndpointRouteBuilder erb)
+        {
+            erb.RegisterCategoryEndpoints();
+    
+        }
+    }
+}
