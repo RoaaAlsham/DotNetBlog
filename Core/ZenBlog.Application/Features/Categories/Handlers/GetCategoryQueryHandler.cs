@@ -19,7 +19,7 @@ namespace ZenBlog.Application.Features.Categories.Handlers
         {
             var categories= await _repository.GetAllAsync();
             var response = _mapper.Map<List<GetCategoryQueryResult>>(categories);
-            return BaseResult<List<GetCategoryQueryResult>>.Success(response);>
+            return BaseResult<List<GetCategoryQueryResult>>.Success(response);
         }   
     }
 }

@@ -1,5 +1,8 @@
 ﻿
+using FluentValidation;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using ZenBlog.Application.Behaviors;
 using ZenBlog.Application.Features.Categories.Mapping;
 
 /*
@@ -26,11 +29,20 @@ namespace ZenBlog.Application.Extensions
             });
 
             // MediatR — scans same assembly for all IRequestHandler implementations
-            services.AddMediatR(cfg =>
-                cfg.RegisterServicesFromAssembly(
-                    typeof(CategoryMappingProfile).Assembly));
+            services.AddMediatR(cfg => {
+                cfg.RegisterServicesFromAssembly(typeof(CategoryMappingProfile).Assembly);
+                cfg.AddOpenBehavior(typeof(ValidationBehavior<,>));
+            });
+
+            services.AddValidatorsFromAssembly(typeof(CategoryMappingProfile).Assembly);
         }
 
     }
+    /*
+cfg.AddOpenBehavior(typeof(LoggingBehavior<,>));
+cfg.AddOpenBehavior(typeof(ValidationBehavior<,>));
+// order: Logging → Validation → Handler
 
- }
+ Pipeline behaviors run in the order they are registered 
+     */
+}
