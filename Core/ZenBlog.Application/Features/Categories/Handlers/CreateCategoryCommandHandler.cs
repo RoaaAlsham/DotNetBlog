@@ -22,7 +22,7 @@ public class CreateCategoryCommandHandler(
         await repository.CreateAsync(category);
         var result= await ufw.SaveChangesAsync();
 
-        return result ? BaseResult<bool>.Success(true)
+        return result? BaseResult<bool>.Success(true)
             : BaseResult<bool>.Failure("Failed to create category");
     }
 }

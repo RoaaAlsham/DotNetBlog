@@ -1,11 +1,13 @@
 using ZenBlog.Persistence.Extentions;
-using Microsoft.EntityFrameworkCore;
-using ZenBlog.Persistence;
 using ZenBlog.Application.Extensions;
 using ZenBlog.API.Endpoints.Registrations;
 using Scalar.AspNetCore;
+using ZenBlog.API.CustomMiddlewares;
 
 var builder = WebApplication.CreateBuilder(args);
+// Make JSON property names case-insensitive
+builder.Services.ConfigureHttpJsonOptions(options =>
+    options.SerializerOptions.PropertyNameCaseInsensitive = true);
 
 // Add services to the container.
 builder.Services.AddPersistenceServices(builder.Configuration);
@@ -24,6 +26,7 @@ if (app.Environment.IsDevelopment())
     app.MapScalarApiReference();
 }
 
+app.UseMiddleware<CustomExceptionHandlingMiddleware>();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

@@ -1,6 +1,7 @@
 ﻿
 using MediatR;
 using ZenBlog.Application.Features.Categories.Queries;
+using ZenBlog.Application.Features.Categories.Commands;
 namespace ZenBlog.API.Endpoints
 {
    //
@@ -18,7 +19,19 @@ namespace ZenBlog.API.Endpoints
                 var response = await _mediator.Send(new GetCategoryQuery());
                 return response.IsSuccess ? Results.Ok(response) : Results.BadRequest(response);
             });
-        
+            categories.MapPost("", async (IMediator _mediator, CreateCategoryCommand command) =>
+            {
+                var response = await _mediator.Send(command);
+
+                if (response.IsFailure)
+                {
+                    return Results.BadRequest(new { Errors = response.Errors });
+                }
+
+                // Ideally, you return 201 Created with the ID of the created category
+                return response.IsSuccess ? Results.Ok() : Results.BadRequest("Could not create the category instance");
+            });
+
         }
     }
     // Using Controllers would be like: 

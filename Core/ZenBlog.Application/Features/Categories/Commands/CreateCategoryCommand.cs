@@ -4,6 +4,10 @@ using ZenBlog.Application.Base;
 
 namespace ZenBlog.Application.Features.Categories.Commands
 {
-    public record CreateCategoryCommand(string CategoryName) : IRequest<BaseResult<bool>>;
+    // CreateCategoryCommand.cs
+    public record CreateCategoryCommand : IRequest<BaseResult<bool>>
+    {
+        public string CategoryName { get; init; } = string.Empty;
+    }
 
 }
