@@ -26,6 +26,7 @@ namespace ZenBlog.Persistence.Extentions
                             errorCodesToAdd: null);
                     });
                 options.AddInterceptors(new AuditDbContextInterceptor());
+                options.UseLazyLoadingProxies();
             });
 
             services.AddIdentity<AppUser, AppRole>(options => { 

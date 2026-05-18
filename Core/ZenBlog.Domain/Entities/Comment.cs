@@ -10,7 +10,7 @@ namespace ZenBlog.Domain.Entities
 
         // Which blog this comment belongs to
         public Guid BlogId { get; set; }
-        public Blog Blog { get; set; }
+        public virtual Blog Blog { get; set; }
 
         // Who wrote it
         public string UserId { get; set; }
