@@ -7,12 +7,11 @@ namespace ZenBlog.Application.Contracts.Persistence
 {
     public interface IRepository<TEntity> where TEntity : BaseEntity
     {
-        Task<List<TEntity>> GetAllAsync();
-        Task<TEntity> GetByIdAsync(Guid id);
+        Task<TEntity?> GetByIdAsync(Guid id, CancellationToken ct);
 
-        Task<IQueryable<TEntity>> GetQueryAsync();
-        Task<TEntity> GetSingleAsync(Expression<Func<TEntity, bool>> filter);
-
+        IQueryable<TEntity> GetQuery();
+        Task<TEntity?> GetSingleAsync(Expression<Func<TEntity, bool>> filter, CancellationToken ct);
+        Task<List<TEntity>> GetAllAsync(CancellationToken ct);
 
         Task CreateAsync(TEntity entity);
         Task UpdateAsync(TEntity entity);

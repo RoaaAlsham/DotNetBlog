@@ -15,7 +15,7 @@ namespace ZenBlog.Application.Features.Categories.Handlers
     {
         public async Task<BaseResult<GetCategoryByIdQueryResult>> Handle(GetCategoryByIdQuery request, CancellationToken cancellationToken)
         {
-            var category = await repository.GetByIdAsync(request.id);
+            var category = await repository.GetByIdAsync(request.id, cancellationToken);
             if (category == null) { 
                 return BaseResult<GetCategoryByIdQueryResult>.NotFound($"Category with id {request.id} not found.");
             }

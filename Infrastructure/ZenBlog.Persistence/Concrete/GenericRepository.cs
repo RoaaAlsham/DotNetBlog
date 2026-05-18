@@ -22,36 +22,41 @@ namespace ZenBlog.Persistence.Concrete
             await _dbSet.AddAsync(entity);
         }
 
-        public async Task DeleteAsync(TEntity entity)
+        public Task DeleteAsync(TEntity entity)
         {
             _dbSet.Remove(entity);
-            await Task.CompletedTask;
+            return Task.CompletedTask;
         }
 
-        public async Task<TEntity> GetByIdAsync(Guid id)
+        public async Task<TEntity?> GetByIdAsync(Guid id, CancellationToken ct = default)
         {
-            return await _dbSet.FindAsync(id);
+            return await _dbSet.FindAsync([id], ct);
         }
 
-        public async Task<List<TEntity>> GetAllAsync()
+        public async Task<List<TEntity>> GetAllAsync(CancellationToken ct = default)
         {
-            return await _dbSet.AsNoTracking().ToListAsync();
+            return await _dbSet.AsNoTracking().ToListAsync(ct);
         }
+    
 
-        public Task<IQueryable<TEntity>> GetQueryAsync()
+        public IQueryable<TEntity> GetQuery()
         {
-            return Task.FromResult(_dbSet.AsNoTracking().AsQueryable());
+            return _dbSet.AsNoTracking().AsQueryable();
         }
 
-        public async Task<TEntity> GetSingleAsync(Expression<Func<TEntity, bool>> filter)
+        public async Task<TEntity?> GetSingleAsync(
+       Expression<Func<TEntity, bool>> filter,
+       CancellationToken ct = default)
         {
-            return await _dbSet.AsNoTracking().FirstOrDefaultAsync(filter);
+            return await _dbSet.AsNoTracking().FirstOrDefaultAsync(filter, ct);
         }
 
-        public async Task UpdateAsync(TEntity entity)
+        public Task UpdateAsync(TEntity entity)
         {
             _dbSet.Update(entity);
-            await Task.CompletedTask;
+            return Task.CompletedTask;
         }
+
+      
     }
 }

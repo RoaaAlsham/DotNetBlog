@@ -14,7 +14,7 @@ namespace ZenBlog.Application.Features.Categories.Handlers
     {
         public async Task<BaseResult<List<GetCategoryQueryResult>>> Handle(GetCategoryQuery request, CancellationToken cancellationToken)
         {
-            var categories= await _repository.GetAllAsync();
+            var categories= await _repository.GetAllAsync(cancellationToken);
             var response = _mapper.Map<List<GetCategoryQueryResult>>(categories);
             return BaseResult<List<GetCategoryQueryResult>>.Success(response);
         }   
