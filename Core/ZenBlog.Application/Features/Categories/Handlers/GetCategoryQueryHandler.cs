@@ -1,8 +1,5 @@
 ﻿using AutoMapper;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using ZenBlog.Application.Base;
 using ZenBlog.Application.Contracts.Persistence;
 using ZenBlog.Application.Features.Categories.Queries;

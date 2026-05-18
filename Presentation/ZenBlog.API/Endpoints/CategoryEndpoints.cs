@@ -32,6 +32,11 @@ namespace ZenBlog.API.Endpoints
                 return response.IsSuccess ? Results.Ok() : Results.BadRequest("Could not create the category instance");
             });
 
+            categories.MapGet("/{id}", async (IMediator _mediator,Guid id) =>
+            {
+                var response = await _mediator.Send(new GetCategoryByIdQuery(id));
+                return response.IsSuccess ? Results.Ok(response) : Results.BadRequest(response);
+            });
         }
     }
     // Using Controllers would be like: 
