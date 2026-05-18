@@ -5,7 +5,8 @@
         public static void RegisterEndpoints(this IEndpointRouteBuilder erb)
         {
             erb.RegisterCategoryEndpoints();
-    
+            erb.RegisterBlogEndpoints();
+
         }
     }
 }

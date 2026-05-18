@@ -1,16 +1,14 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace ZenBlog.Domain.Entities
+namespace ZenBlog.Domain.Entities;
+public class AppUser : IdentityUser<string>
 {
-    public class AppUser : IdentityUser<string>
-    { public string FirstName { get; set; }
-        public string LastName { get; set; }
+    public required string FirstName { get; set; }
+    public required string LastName { get; set; }
+    public string? ImageUrl { get; set; } 
 
-        public string? imageUrl { get; set; }
-    
-        public virtual IList<Blog> Blogs { get; set; }
-        public virtual IList<Comment> Comments { get; set; }
-    }
+    public virtual ICollection<Blog> Blogs { get; set; } = [];
+    public virtual ICollection<Comment> Comments { get; set; } = [];
 }
 // Lazy Loading is not enabled by default in EF Core,
 // so we need to explicitly mark the navigation properties

@@ -18,7 +18,7 @@ namespace ZenBlog.Domain.Entities
 
         // Self-referencing: null = top-level comment, set = it's a reply
         public Guid? ParentCommentId { get; set; }
-        public Comment ParentComment { get; set; }
+        public virtual Comment ParentComment { get; set; }
 
         // All replies to this comment
         public virtual IList<Comment> Replies { get; set; } = new List<Comment>();
