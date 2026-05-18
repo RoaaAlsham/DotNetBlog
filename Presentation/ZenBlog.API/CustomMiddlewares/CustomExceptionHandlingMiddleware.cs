@@ -43,7 +43,8 @@ namespace ZenBlog.API.CustomMiddlewares
             {
                 context.Response.StatusCode = StatusCodes.Status500InternalServerError;
                 context.Response.ContentType = "application/json";
-                var response = BaseResult<object>.Failure("An unexpected error occurred.");
+               
+                var response = BaseResult<object>.Failure("Unexpected Error: "+ex.Message);
                 await context.Response.WriteAsJsonAsync(response);
             }
         }
