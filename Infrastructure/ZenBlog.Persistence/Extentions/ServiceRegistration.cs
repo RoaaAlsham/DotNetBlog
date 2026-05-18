@@ -1,7 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ZenBlog.Application.Contracts.Persistence;
+using ZenBlog.Domain.Entities;
 using ZenBlog.Persistence.Concrete;
 using ZenBlog.Persistence.Context;
 using ZenBlog.Persistence.Intercepters.ZenBlog.Persistence.Interceptors;
@@ -25,6 +27,11 @@ namespace ZenBlog.Persistence.Extentions
                     });
                 options.AddInterceptors(new AuditDbContextInterceptor());
             });
+
+            services.AddIdentity<AppUser, AppRole>(options => { 
+               options.User.RequireUniqueEmail = true;
+            }).AddEntityFrameworkStores<AppDbContext>();
+
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
         }

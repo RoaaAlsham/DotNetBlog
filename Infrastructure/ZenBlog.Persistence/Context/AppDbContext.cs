@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using ZenBlog.Domain.Entities;
 namespace ZenBlog.Persistence.Context
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext<AppUser, AppRole, string>
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
@@ -18,8 +19,28 @@ namespace ZenBlog.Persistence.Context
         public DbSet<Message> Messages { get; set; }
         public DbSet<SocialMedia> SocialMedias { get; set; }
 
+        public DbSet<Comment> Comments { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);// required to run Identity's config first
+            modelBuilder.Entity<Comment>(entity =>
+            {
+                entity.HasOne(c => c.ParentComment)
+                      .WithMany(c => c.Replies)
+                      .HasForeignKey(c => c.ParentCommentId)
+                      .OnDelete(DeleteBehavior.Restrict); // Avoid cascade delete cycles
+
+                entity.HasOne(c => c.Blog)
+                      .WithMany(b => b.Comments)
+                      .HasForeignKey(c => c.BlogId)
+                      .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(c => c.User)
+                      .WithMany(u => u.Comments)
+                      .HasForeignKey(c => c.UserId)
+                      .OnDelete(DeleteBehavior.Restrict);
+            });
         }
     }
 }
