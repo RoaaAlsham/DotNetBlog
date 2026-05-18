@@ -13,7 +13,6 @@ namespace ZenBlog.Application.Features.Categories.Mapping
             CreateMap<Category,GetCategoryByIdQueryResult >();
             CreateMap<Category, UpdateCategoryCommand>().ReverseMap();
 
-
         }
     }
 }

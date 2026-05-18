@@ -46,7 +46,13 @@ namespace ZenBlog.API.Endpoints
                 var response = await _mediator.Send(command);
                 return response.IsSuccess ? Results.NoContent() : Results.BadRequest(new { Errors=response.Errors});
             });
-       
+
+            categories.MapDelete("/{id:guid}", async (IMediator _mediator, Guid id) =>
+            {
+                var response = await _mediator.Send(new RemoveCategoryCommand(id));
+                return response.IsSuccess ? Results.NoContent() : Results.BadRequest(new { Errors = response.Errors });
+            });
+
         }
     }
     // Using Controllers would be like: 

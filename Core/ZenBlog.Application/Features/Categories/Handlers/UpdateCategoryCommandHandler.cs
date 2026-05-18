@@ -19,6 +19,9 @@ namespace ZenBlog.Application.Features.Categories.Handlers
                 return BaseResult<bool>.Failure($"Category with ID {request.Id} not found.");
             }
             mapper.Map(request, category);
+            // Without mapper — manual copies all matching fields from request → category
+            //category.Name = request.Name;
+            //category.Description = request.Description;
             await repository.UpdateAsync(category);
             var response = await unitOfWork.SaveChangesAsync();
             return response ? BaseResult<bool>.Success(true) : BaseResult<bool>.Failure("Failed to update category.");
