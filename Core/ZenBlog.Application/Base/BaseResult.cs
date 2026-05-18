@@ -6,7 +6,7 @@ namespace ZenBlog.Application.Base
     public class BaseResult<T>
     {
         public T? Data { get; set; }
-        public IEnumerable<Error> Errors { get; set; }
+        public IEnumerable<Error> Errors { get; set; } = [];
 
         [JsonIgnore]
         public bool IsSuccess => Errors == null || !Errors.Any();
@@ -21,7 +21,7 @@ namespace ZenBlog.Application.Base
         public static BaseResult<T> Failure(
             )
         {
-            return new BaseResult<T> { Errors = [new Error { ErrorMessage="an unexpected error occudred"}] };
+            return new BaseResult<T> { Errors = [new Error { ErrorMessage="an unexpected error occurred"}] };
         }
 
         public static BaseResult<T> Failure(string errorMessage

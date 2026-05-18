@@ -11,6 +11,7 @@ namespace ZenBlog.Application.Features.Categories.Mapping
             CreateMap<Category, Results.GetCategoryQueryResult>().ReverseMap();
             CreateMap<Category, CreateCategoryCommand>().ReverseMap();
             CreateMap<Category,GetCategoryByIdQueryResult >();
+            CreateMap<Category, UpdateCategoryCommand>().ReverseMap();
 
 
         }

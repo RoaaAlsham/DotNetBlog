@@ -1,5 +1,4 @@
-﻿
-using MediatR;
+﻿using MediatR;
 using ZenBlog.Application.Features.Categories.Queries;
 using ZenBlog.Application.Features.Categories.Commands;
 namespace ZenBlog.API.Endpoints
@@ -17,7 +16,7 @@ namespace ZenBlog.API.Endpoints
             categories.MapGet("", async (IMediator _mediator) =>
             {
                 var response = await _mediator.Send(new GetCategoryQuery());
-                return response.IsSuccess ? Results.Ok(response) : Results.BadRequest(response);
+                return response.IsSuccess ? Results.Ok(response.Data) : Results.BadRequest(response.Errors);
             });
             categories.MapPost("", async (IMediator _mediator, CreateCategoryCommand command) =>
             {
@@ -29,14 +28,25 @@ namespace ZenBlog.API.Endpoints
                 }
 
                 // Ideally, you return 201 Created with the ID of the created category
-                return response.IsSuccess ? Results.Ok() : Results.BadRequest("Could not create the category instance");
+                return response.IsSuccess ? Results.Created($"/categories/{response.Data}", null) : Results.BadRequest("Could not create the category instance");
             });
 
             categories.MapGet("/{id}", async (IMediator _mediator,Guid id) =>
             {
                 var response = await _mediator.Send(new GetCategoryByIdQuery(id));
-                return response.IsSuccess ? Results.Ok(response) : Results.BadRequest(response);
+                return response.IsSuccess ? Results.Ok(response.Data) : Results.NotFound(response.Errors);
             });
+
+            categories.MapPut("/{id:guid}", async (IMediator _mediator, Guid id, UpdateCategoryCommand command) =>
+            {
+                if (id != command.Id)
+                {
+                    return Results.BadRequest("ID in the URL does not match ID in the body.");
+                }
+                var response = await _mediator.Send(command);
+                return response.IsSuccess ? Results.NoContent() : Results.BadRequest(new { Errors=response.Errors});
+            });
+       
         }
     }
     // Using Controllers would be like: 

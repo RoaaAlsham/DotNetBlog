@@ -24,7 +24,7 @@ namespace ZenBlog.Persistence.Concrete
 
         public async Task DeleteAsync(TEntity entity)
         {
-           _dbSet.Remove(entity);
+            _dbSet.Remove(entity);
             await Task.CompletedTask;
         }
 

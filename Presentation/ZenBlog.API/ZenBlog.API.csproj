@@ -21,4 +21,8 @@
     <ProjectReference Include="..\..\Infrastructure\ZenBlog.Persistence\ZenBlog.Persistence.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+  </ItemGroup>
+
 </Project>
