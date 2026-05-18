@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using Microsoft.AspNetCore.Identity;
 using ZenBlog.Application.Base;
 using ZenBlog.Application.Features.Users.Commands;
@@ -7,7 +8,7 @@ using ZenBlog.Domain.Entities;
 
 namespace ZenBlog.Application.Features.Users.Handlers
 {
-    public class CreateUserCommandHandler(UserManager<AppUser> userManager) : IRequestHandler<CreateUserCommand, BaseResult<CreateUserResult>>
+    public class CreateUserCommandHandler(UserManager<AppUser> userManager, IMapper mapper) : IRequestHandler<CreateUserCommand, BaseResult<CreateUserResult>>
     {
 
         public async Task<BaseResult<CreateUserResult>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
@@ -17,13 +18,7 @@ namespace ZenBlog.Application.Features.Users.Handlers
             {
                 return BaseResult<CreateUserResult>.Failure("Email is already in use.");
             }
-            var user = new AppUser
-            {
-                FirstName = request.FirstName,
-                LastName = request.LastName,
-                UserName = request.Username,
-                Email = request.Email
-            };
+            var user = mapper.Map<AppUser>(request);
 
             var result = await userManager.CreateAsync(user, request.Password);
             if (!result.Succeeded)

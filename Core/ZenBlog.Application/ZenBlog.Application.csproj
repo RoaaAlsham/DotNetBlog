@@ -20,7 +20,6 @@
   <ItemGroup>
     <Folder Include="Features\Blogs\Commands\" />
     <Folder Include="Features\Blogs\Validators\" />
-    <Folder Include="Features\Users\Mappings\" />
     <Folder Include="Features\Users\Queries\" />
   </ItemGroup>
 
