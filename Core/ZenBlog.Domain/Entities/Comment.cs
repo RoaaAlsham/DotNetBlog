@@ -14,14 +14,14 @@ namespace ZenBlog.Domain.Entities
 
         // Who wrote it
         public string UserId { get; set; }
-        public AppUser User { get; set; }
+        public virtual AppUser User { get; set; }
 
         // Self-referencing: null = top-level comment, set = it's a reply
         public Guid? ParentCommentId { get; set; }
         public Comment ParentComment { get; set; }
 
         // All replies to this comment
-        public IList<Comment> Replies { get; set; } = new List<Comment>();
+        public virtual IList<Comment> Replies { get; set; } = new List<Comment>();
     }
 }
 /*
