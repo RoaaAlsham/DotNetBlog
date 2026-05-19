@@ -45,54 +45,161 @@ ZenBlog follows **Clean Architecture** with four layers that depend strictly inw
 
 ```
 ZenBlogServer/
-├── ZenBlog.API/
-│   └── Endpoints/
-│       ├── BlogEndpoints.cs
-│       ├── CategoryEndpoints.cs
-│       ├── CommentEndpoints.cs
-│       └── UserEndpoints.cs
-│
-├── ZenBlog.Application/
-│   ├── Base/
-│   │   ├── BaseDto.cs
-│   │   └── BaseResult.cs
-│   ├── Behaviors/
-│   │   └── ValidationBehavior.cs
-│   ├── Contracts/
-│   │   └── Persistence/
-│   │       ├── IRepository.cs
-│   │       └── IUnitOfWork.cs
-│   ├── DTOs/
-│   │   ├── BlogDto.cs
-│   │   ├── CategoryDto.cs
-│   │   └── UserDto.cs
-│   └── Features/
-│       ├── Blogs/
-│       │   ├── Commands/
-│       │   ├── Handlers/
-│       │   ├── Mapping/
-│       │   ├── Queries/
-│       │   ├── Results/
-│       │   └── Validators/
-│       ├── Categories/
-│       ├── Comments/
-│       └── Users/
-│
-├── ZenBlog.Domain/
-│   └── Entities/
-│       ├── Common/
-│       │   └── BaseEntity.cs
-│       ├── AppUser.cs
-│       ├── AppRole.cs
-│       ├── Blog.cs
-│       ├── Category.cs
-│       └── Comment.cs
-│
-└── ZenBlog.Persistence/
-    ├── Context/
-    │   └── AppDbContext.cs
-    └── Concrete/
-        └── GenericRepository.cs
+├── .github/
+│   └── workflows/
+├── Core/
+│   ├── ZenBlog.Application/
+│   │   ├── Base/
+│   │   │   ├── BaseDto.cs
+│   │   │   └── BaseResult.cs
+│   │   ├── Behaviors/
+│   │   │   └── ValidationBehavior.cs
+│   │   ├── Contracts/
+│   │   │   └── Persistence/
+│   │   │       ├── IRepository.cs
+│   │   │       └── IUnitOfWork.cs
+│   │   ├── DTOs/
+│   │   │   ├── BlogDto.cs
+│   │   │   ├── CategoryDto.cs
+│   │   │   └── UserDto.cs
+│   │   ├── Extensions/
+│   │   │   └── ServiceRegistration.cs
+│   │   └── Features/
+│   │       ├── Blogs/
+│   │       │   ├── Commands/
+│   │       │   │   ├── CreateBlogCommand.cs
+│   │       │   │   ├── RemoveBlogCommand.cs
+│   │       │   │   └── UpdateBlogCommand.cs
+│   │       │   ├── Handlers/
+│   │       │   │   ├── CreateBlogCommandHandler.cs
+│   │       │   │   ├── GetBlogByIdQueryHandler.cs
+│   │       │   │   ├── GetBlogsByCategoryIdQueryHandler.cs
+│   │       │   │   ├── GetBlogsQueryHandler.cs
+│   │       │   │   ├── RemoveBlogCommandHandler.cs
+│   │       │   │   └── UpdateBlogCommandHandler.cs
+│   │       │   ├── Mapping/
+│   │       │   │   └── BlogMappingProfile.cs
+│   │       │   ├── Queries/
+│   │       │   │   ├── GetBlogByIdQuery.cs
+│   │       │   │   ├── GetBlogsByCategoryIdQuery.cs
+│   │       │   │   └── GetBlogsQuery.cs
+│   │       │   ├── Results/
+│   │       │   │   ├── CreateBlogResult.cs
+│   │       │   │   └── GetBlogsQueryResult.cs
+│   │       │   └── Validators/
+│   │       │       ├── CreateBlogValidator.cs
+│   │       │       └── UpdateBlogValidator.cs
+│   │       ├── Categories/
+│   │       │   ├── Commands/
+│   │       │   │   ├── CreateCategoryCommand.cs
+│   │       │   │   ├── RemoveCategoryCommand.cs
+│   │       │   │   └── UpdateCategoryCommand.cs
+│   │       │   ├── Handlers/
+│   │       │   │   ├── CreateCategoryCommandHandler.cs
+│   │       │   │   ├── GetCategoryByIdQueryHandler.cs
+│   │       │   │   ├── GetCategoryQueryHandler.cs
+│   │       │   │   ├── RemoveCategoryCommandHandler.cs
+│   │       │   │   └── UpdateCategoryCommandHandler.cs
+│   │       │   ├── Mapping/
+│   │       │   │   └── CategoryMappingProfile.cs
+│   │       │   ├── Queries/
+│   │       │   │   ├── GetCategoryByIdQuery.cs
+│   │       │   │   └── GetCategoryQuery.cs
+│   │       │   ├── Results/
+│   │       │   │   └── GetCategoryQueryResult.cs
+│   │       │   └── Validators/
+│   │       │       ├── CreateCategoryValidator.cs
+│   │       │       └── UpdateCategoryValidator.cs
+│   │       ├── Comments/
+│   │       │   ├── Commands/
+│   │       │   │   ├── CreateCommentCommand.cs
+│   │       │   │   ├── RemoveCommentCommand.cs
+│   │       │   │   └── UpdateCommentCommand.cs
+│   │       │   ├── Handlers/
+│   │       │   │   ├── CreateCommentCommandHandler.cs
+│   │       │   │   ├── DeleteCommentCommandHandler.cs
+│   │       │   │   ├── GetCommentByIdQueryHandler.cs
+│   │       │   │   ├── GetCommentsByBlogIdQueryHandler.cs
+│   │       │   │   └── UpdateCommentCommandHandler.cs
+│   │       │   ├── Mapping/
+│   │       │   │   └── CommentMappingProfile.cs
+│   │       │   ├── Queries/
+│   │       │   │   ├── GetCommentByIdQuery.cs
+│   │       │   │   └── GetCommentsByBlogIdQuery.cs
+│   │       │   ├── Results/
+│   │       │   │   ├── CommentResult.cs
+│   │       │   │   └── CreateCommentResult.cs
+│   │       │   └── Validators/
+│   │       │       ├── CreateCommentCommandValidation.cs
+│   │       │       └── UpdateCommentCommandValidator.cs
+│   │       └── Users/
+│   │           ├── Commands/
+│   │           │   └── CreateUserCommand.cs
+│   │           ├── Handlers/
+│   │           │   ├── CreateUserCommandHandler.cs
+│   │           │   └── GetAllUsersQueryHandler.cs
+│   │           ├── Mappings/
+│   │           │   └── UserMappingProfile.cs
+│   │           ├── Queries/
+│   │           │   └── GetAllUsersQuery.cs
+│   │           ├── Results/
+│   │           │   ├── CreateUserResult.cs
+│   │           │   └── GetAllUsersQueryResult.cs
+│   │           └── Validators/
+│   │               └── CreateUserCommandValidator.cs
+│   └── ZenBlog.Domain/
+│       ├── Entities/
+│       │   ├── Common/
+│       │   │   └── BaseEntity.cs
+│       │   ├── AppRole.cs
+│       │   ├── AppUser.cs
+│       │   ├── Blog.cs
+│       │   ├── Category.cs
+│       │   ├── Comment.cs
+│       │   ├── ContactInfo.cs
+│       │   ├── Message.cs
+│       │   └── SocialMedia.cs
+│       └── ZenBlog.Domain.csproj
+├── Infrastructure/
+│   ├── ZenBlog.Infrastructure/
+│   │   └── ZenBlog.Infrastructure.csproj
+│   └── ZenBlog.Persistence/
+│       ├── Concrete/
+│       │   ├── GenericRepository.cs
+│       │   └── UnitOfWork.cs
+│       ├── Context/
+│       │   └── AppDbContext.cs
+│       ├── Extentions/
+│       │   └── ServiceRegistration.cs
+│       ├── Intercepters/
+│       │   └── AuditDbContextInterceptor.cs
+│       ├── Migrations/
+│       │   ├── 20260517052456_initial_migration.cs
+│       │   ├── 20260517062621_fix-category-self-reference.cs
+│       │   ├── 20260518185445_mig_identity_and_comments_added.cs
+│       │   ├── 20260519062120_mig_fix.cs
+│       │   ├── 20260519080023_mig_fix_user_id.cs
+│       │   ├── 20260519122257_mig_allow_nullable_image_urls_for_blog.cs
+│       │   └── AppDbContextModelSnapshot.cs
+│       └── ZenBlog.Persistence.csproj
+└── Presentation/
+    └── ZenBlog.API/
+        ├── appsettings.Development.json
+        ├── appsettings.json
+        ├── CustomMiddlewares/
+        │   └── CustomExceptionHandlingMiddleware.cs
+        ├── Endpoints/
+        │   ├── BlogEndpoints.cs
+        │   ├── CategoryEndpoints.cs
+        │   ├── CommentEndpoints.cs
+        │   ├── UserEndpoints.cs
+        │   └── Registrations/
+        │       └── EndpointRegistration.cs
+        ├── Program.cs
+        ├── Properties/
+        │   └── launchSettings.json
+        ├── ZenBlog.API.csproj
+        └── ZenBlog.API.http
 ```
 
 ---
