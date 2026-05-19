@@ -22,6 +22,10 @@ namespace ZenBlog.Application.Contracts.Persistence
     CancellationToken ct = default,
     params Expression<Func<TEntity, object>>[] includes);
 
+        Task<List<TEntity>> GetAllWithIncludesAsync(
+    Expression<Func<TEntity, bool>> filter,
+    CancellationToken ct = default,
+    params Expression<Func<TEntity, object>>[] includes);
 
         Task<TEntity?> GetSingleWithIncludesAsync(
     Expression<Func<TEntity, bool>> filter,

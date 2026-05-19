@@ -36,6 +36,18 @@ namespace ZenBlog.API.Endpoints
                 var response = await _mediator.Send(command);
                 return response.IsSuccess ? Results.Ok(response.Data) : Results.BadRequest(response.Errors);
             });
+
+            blogs.MapDelete("/{id}", async (IMediator _mediator, Guid id) =>
+            {
+                var response = await _mediator.Send(new RemoveBlogCommand(id));
+                return response.IsSuccess ? Results.Ok() : Results.BadRequest(response.Errors);
+            });
+
+            blogs.MapGet("/category/{categoryId}", async (IMediator _mediator, Guid categoryId) =>
+            {
+                var response = await _mediator.Send(new GetBlogsByCategoryIdQuery(categoryId));
+                return response.IsSuccess ? Results.Ok(response.Data) : Results.BadRequest(response.Errors);
+            });
         }
     }
 }
