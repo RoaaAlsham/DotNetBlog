@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ZenBlog.Domain.Entities
+﻿namespace ZenBlog.Domain.Entities
 {
     public class Blog : Common.BaseEntity
     {

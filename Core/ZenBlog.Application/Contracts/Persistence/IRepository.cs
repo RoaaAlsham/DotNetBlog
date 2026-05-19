@@ -17,5 +17,17 @@ namespace ZenBlog.Application.Contracts.Persistence
         Task UpdateAsync(TEntity entity);
 
         Task DeleteAsync(TEntity entity);
+
+        Task<List<TEntity>> GetAllWithIncludesAsync(
+    CancellationToken ct = default,
+    params Expression<Func<TEntity, object>>[] includes);
+
+
+        Task<TEntity?> GetSingleWithIncludesAsync(
+    Expression<Func<TEntity, bool>> filter,
+    CancellationToken ct = default,
+    params Expression<Func<TEntity, object>>[] includes);
     }
+
+
 }

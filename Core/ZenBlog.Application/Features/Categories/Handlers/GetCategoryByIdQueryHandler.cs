@@ -11,16 +11,16 @@ namespace ZenBlog.Application.Features.Categories.Handlers
     public class GetCategoryByIdQueryHandler
         (IRepository<Category> repository, IMapper mapper)
         : IRequestHandler<GetCategoryByIdQuery,
-            BaseResult<GetCategoryByIdQueryResult>>
+            BaseResult<GetCategoryQueryResult>>
     {
-        public async Task<BaseResult<GetCategoryByIdQueryResult>> Handle(GetCategoryByIdQuery request, CancellationToken cancellationToken)
+        public async Task<BaseResult<GetCategoryQueryResult>> Handle(GetCategoryByIdQuery request, CancellationToken cancellationToken)
         {
             var category = await repository.GetByIdAsync(request.id, cancellationToken);
             if (category == null) { 
-                return BaseResult<GetCategoryByIdQueryResult>.NotFound($"Category with id {request.id} not found.");
+                return BaseResult<GetCategoryQueryResult>.NotFound($"Category with id {request.id} not found.");
             }
-            var response = mapper.Map<GetCategoryByIdQueryResult>(category);
-            return BaseResult<GetCategoryByIdQueryResult>.Success(response);
+            var response = mapper.Map<GetCategoryQueryResult>(category);
+            return BaseResult<GetCategoryQueryResult>.Success(response);
         }
     }
 }

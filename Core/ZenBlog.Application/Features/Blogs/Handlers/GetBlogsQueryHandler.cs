@@ -8,13 +8,15 @@ using ZenBlog.Domain.Entities;
 
 namespace ZenBlog.Application.Features.Blogs.Handlers
 {
-    public class GetBlogsQueryHandler(IRepository<Blog> repository, IMapper mapper) : IRequestHandler<GetBlogsQuery, BaseResult<List<GetBlogsQueryResults>>>
+    public class GetBlogsQueryHandler(IRepository<Blog> repository, IMapper mapper) : IRequestHandler<GetBlogsQuery, BaseResult<List<GetBlogsQueryResult>>>
     {
-        public async Task<BaseResult<List<GetBlogsQueryResults>>> Handle(GetBlogsQuery request, CancellationToken cancellationToken)
+        public async Task<BaseResult<List<GetBlogsQueryResult>>> Handle(GetBlogsQuery request, CancellationToken cancellationToken)
         {
-            var values = await repository.GetAllAsync(cancellationToken);
-            var blogs = mapper.Map<List<GetBlogsQueryResults>>(values);
-            return BaseResult<List<GetBlogsQueryResults>>.Success(blogs);
+            var values = await repository.GetAllWithIncludesAsync(
+    cancellationToken,
+    b => b.Category);
+            var blogs = mapper.Map<List<GetBlogsQueryResult>>(values);
+            return BaseResult<List<GetBlogsQueryResult>>.Success(blogs);
         
         }
     }

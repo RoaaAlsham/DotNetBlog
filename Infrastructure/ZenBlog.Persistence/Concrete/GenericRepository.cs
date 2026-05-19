@@ -57,6 +57,25 @@ namespace ZenBlog.Persistence.Concrete
             return Task.CompletedTask;
         }
 
-      
+        public async Task<List<TEntity>> GetAllWithIncludesAsync(
+      CancellationToken ct = default,
+      params Expression<Func<TEntity, object>>[] includes)
+        {
+            IQueryable<TEntity> query = _dbSet.AsNoTracking();
+            foreach (var include in includes)
+                query = query.Include(include);  
+            return await query.ToListAsync(ct);
+        }
+
+        public async Task<TEntity?> GetSingleWithIncludesAsync(
+    Expression<Func<TEntity, bool>> filter,
+    CancellationToken ct = default,
+    params Expression<Func<TEntity, object>>[] includes)
+        {
+            IQueryable<TEntity> query = _dbSet.AsNoTracking();
+            foreach (var include in includes)
+                query = query.Include(include);
+            return await query.FirstOrDefaultAsync(filter, ct);
+        }
     }
 }

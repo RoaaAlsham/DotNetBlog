@@ -20,6 +20,12 @@ namespace ZenBlog.API.Endpoints
                var response = await _mediator.Send(command);
                 return response.IsSuccess ? Results.Ok(response.Data) : Results.BadRequest(response.Errors);        
             });
+
+            blogs.MapGet("/{id}", async (IMediator _mediator, Guid id) =>
+            {
+                var response = await _mediator.Send(new GetBlogByIdQuery(id));
+                return response.IsSuccess ? Results.Ok(response.Data) : Results.BadRequest(response.Errors);
+            });
         }
     }
 }
