@@ -8,11 +8,17 @@ namespace ZenBlog.Application.Features.Blogs.Mapping
 {
     public class BlogMappingProfile: Profile
     {
-        public BlogMappingProfile() {
+        public BlogMappingProfile()
+        {
             CreateMap<Domain.Entities.Blog, GetBlogsQueryResult>().ReverseMap();
             CreateMap<Domain.Entities.Blog, CreateBlogCommand>().ReverseMap();
             CreateMap<Domain.Entities.Category, CategoryDto>();
 
+            // For update — map command onto existing entity, ignore fields not in command
+            CreateMap<UpdateBlogCommand, Domain.Entities.Blog>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())         // never overwrite Id
+                .ForMember(dest => dest.UserId, opt => opt.Ignore())     // never overwrite owner
+                .ForMember(dest => dest.Comments, opt => opt.Ignore());  // never touch relations
         }
     }
 }
