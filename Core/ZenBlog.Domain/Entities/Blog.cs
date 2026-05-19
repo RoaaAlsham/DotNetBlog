@@ -15,7 +15,7 @@ namespace ZenBlog.Domain.Entities
         public virtual  Category Category { get; set; } // Navigation property to Category
         
         public string UserId { get; set; } // Foreign key to User
-        public virtual  AppUser User { get; set; } // Navigation property to User
+        public virtual AppUser User { get; set; } // Navigation property to User
 
         public virtual IList<Comment> Comments { get; set; } = new List<Comment>();
     }

@@ -6,6 +6,7 @@
         {
             erb.RegisterCategoryEndpoints();
             erb.RegisterBlogEndpoints();
+            erb.RegisterUserEndpoints();
 
         }
     }

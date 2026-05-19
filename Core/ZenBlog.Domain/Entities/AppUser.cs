@@ -5,7 +5,7 @@ public class AppUser : IdentityUser<string>
 {
     public required string FirstName { get; set; }
     public required string LastName { get; set; }
-    public string? ImageUrl { get; set; } 
+    public string? ImageUrl { get; set; }
 
     public virtual ICollection<Blog> Blogs { get; set; } = [];
     public virtual ICollection<Comment> Comments { get; set; } = [];

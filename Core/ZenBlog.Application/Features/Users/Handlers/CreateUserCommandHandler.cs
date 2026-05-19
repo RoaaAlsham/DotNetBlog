@@ -19,6 +19,7 @@ namespace ZenBlog.Application.Features.Users.Handlers
                 return BaseResult<CreateUserResult>.Failure("Email is already in use.");
             }
             var user = mapper.Map<AppUser>(request);
+            user.Id= Guid.NewGuid().ToString();
 
             var result = await userManager.CreateAsync(user, request.Password);
             if (!result.Succeeded)
