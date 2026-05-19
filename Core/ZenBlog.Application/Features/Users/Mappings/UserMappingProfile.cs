@@ -13,6 +13,8 @@ namespace ZenBlog.Application.Features.Users.Mappings
                 .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.Username))
                 .ForMember(dest => dest.Id, opt => opt.Ignore())       //Let Identity generate it
                 .ForMember(dest => dest.ImageUrl, opt => opt.Ignore()); // Not in the command
+
+
         }
     }
 }

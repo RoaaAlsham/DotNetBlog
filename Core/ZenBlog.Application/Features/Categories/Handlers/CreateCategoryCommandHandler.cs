@@ -11,9 +11,9 @@ public class CreateCategoryCommandHandler(
     IRepository<Category> repository,
     IUnitOfWork ufw,
     IMapper mapper)
-    : IRequestHandler<CreateCategoryCommand, BaseResult<bool>>  
+    : IRequestHandler<CreateCategoryCommand, BaseResult<object>>  
 {
-    public async Task<BaseResult<bool>> Handle(
+    public async Task<BaseResult<object>> Handle(
         CreateCategoryCommand request,           
         CancellationToken cancellationToken)
     {
@@ -22,7 +22,7 @@ public class CreateCategoryCommandHandler(
         await repository.CreateAsync(category);
         var result= await ufw.SaveChangesAsync();
 
-        return result? BaseResult<bool>.Success(true)
-            : BaseResult<bool>.Failure("Failed to create category");
+        return result? BaseResult<object>.Success(category)
+            : BaseResult<object>.Failure("Failed to create category");
     }
 }

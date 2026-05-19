@@ -1,5 +1,6 @@
-﻿using ZenBlog.Application.Features.Users.Commands;
-using MediatR;
+﻿using MediatR;
+using ZenBlog.Application.Features.Users.Commands;
+using ZenBlog.Application.Features.Users.Queries;
 namespace ZenBlog.API.Endpoints
 {
     public static class UserEndpoints
@@ -10,6 +11,12 @@ namespace ZenBlog.API.Endpoints
             users.MapPost("/register", async (CreateUserCommand command, IMediator mediator) =>
             {
                 var result = await mediator.Send(command);
+                return result.IsSuccess ? Results.Ok(result.Data) : Results.BadRequest(result.Errors);
+            });
+
+            users.MapGet("/", async (IMediator mediator) =>
+            {
+                var result = await mediator.Send(new GetAllUsersQuery());
                 return result.IsSuccess ? Results.Ok(result.Data) : Results.BadRequest(result.Errors);
             });
 

@@ -5,7 +5,7 @@ using ZenBlog.Application.Base;
 namespace ZenBlog.Application.Features.Categories.Commands
 {
   
-    public record CreateCategoryCommand : IRequest<BaseResult<bool>>
+    public record CreateCategoryCommand : IRequest<BaseResult<object>>
     {
         public string CategoryName { get; init; } = string.Empty;
     }
