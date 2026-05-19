@@ -1,10 +1,5 @@
-# ZenBlog — Full Stack Blog API
+# DotnetBlog - BackendServer
 
-A full-stack blog application built with **.NET 10 Web API** and **Angular 20**, following Clean Architecture principles. This repository contains the backend server (`ZenBlogServer`).
-
-> Built while following the Udemy course: *.NET 9 Web API + Angular 20 ile Full Stack Web Geliştirme*
-
----
 
 ## Architecture
 
@@ -54,44 +49,11 @@ Dependency direction: `API → Application ← Persistence`, `Application → Do
 
 - `Blog` — blog posts with title, content, image
 - `Category` — blog categories
-- `Comment` / `SubComment` — nested comments on blogs
+- `Comment` — comments with replies on blogs
 - `ContactInfo` — site contact details
 - `Message` — contact form submissions
 - `SocialMedia` — social media links
 
 ---
 
-## Getting Started
 
-### Prerequisites
-
-- [.NET 10 SDK](https://dotnet.microsoft.com/download)
-- Postgresql (local or Docker)
-
-### Setup
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/RoaaAlsham/ZenBlog.git
-   cd ZenBlog
-   ```
-
-2. Add your connection string to `secrets.json` in `ZenBlog.API`:
-   ```bash
-   dotnet user-secrets set "ConnectionStrings:DefaultConnection" "Server=...;Database=ZenBlog;..."
-   ```
-
-3. Apply migrations:
-   ```bash
-   dotnet ef database update --project ZenBlog.Persistence --startup-project ZenBlog.API
-   ```
-
-4. Run the API:
-   ```bash
-   dotnet run --project ZenBlog.API
-   ```
-
-5. Open Scalar API docs at `https://localhost:{port}/scalar`
-
-
----
